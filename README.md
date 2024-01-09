@@ -1,7 +1,9 @@
 # An ESP8266 -based Weather Station
 
 ## Current Measurements
-<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2390966/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+[![temperature](https://github.com/gitaroktato/espweather/assets/1140629/16b28fa9-9d39-4b1c-974e-daa2fef142b2)]("https://thingspeak.com/channels/2390966/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15)
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="></iframe>
 <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2390966/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
 <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2390966/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
 
