@@ -1,22 +1,13 @@
 # An ESP8266 -based Weather Station
 
 ## Current Measurements
-[![temperature](https://github.com/gitaroktato/espweather/assets/1140629/16b28fa9-9d39-4b1c-974e-daa2fef142b2)]("https://thingspeak.com/channels/2390966/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15)
-
-<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="></iframe>
-<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2390966/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
-<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2390966/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
-
----
-
-<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2390966/widgets/782462"></iframe>
-<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2390966/widgets/782465"></iframe>
+[![View it on ThikgSpeak](https://github.com/gitaroktato/espweather/assets/1140629/1ec4722a-0eb8-45fa-9a29-158e1f37708d)](https://thingspeak.com/channels/2390966)
 
 ## Look & Feel
-![wiring](img/1704799735216.jpg)
-![wiring](img/1704799735232.jpg)
-![shell](img/1704799735185.jpg)
-![shell](img/1704799735196.jpg)
+<img src="img/1704799735216.jpg" width=300>
+<img src="img/1704799735232.jpg" width=300>
+<img src="img/1704799735185.jpg" width=300>
+<img src="img/1704799735196.jpg" width=300>
 
 ## References
 
