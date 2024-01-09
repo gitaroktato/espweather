@@ -30,6 +30,7 @@
 - https://randomnerdtutorials.com/power-esp32-esp8266-solar-panels-battery-level-monitoring/
 - https://www.youtube.com/watch?v=f2yMs-JAyQM
 - https://www.youtube.com/watch?v=ttyKZnVzic4
+- https://youtu.be/6DY767kQnUM?si=SXygTiLH4zx0RgAH
 
 ### Photocells
 - https://www.mouser.com/datasheet/2/737/photocells-932884.pdf
