@@ -1,7 +1,10 @@
 # An ESP8266 -based Weather Station
 
-## Current Measurements
+## Realtime Measurements
 [![View it on ThikgSpeak](https://github.com/gitaroktato/espweather/assets/1140629/1ec4722a-0eb8-45fa-9a29-158e1f37708d)](https://thingspeak.com/channels/2390966)
+
+## Schematic
+![schematic](img/Schematic_espweather_2024-01-21.png)
 
 ## Look & Feel
 <img src="img/1704799735216.jpg" width=300>
