@@ -47,9 +47,16 @@
 #define DHT_SENSOR_TYPE DHT11
 
 #define PHOTORESISTOR_PIN A0
+// Report to ThingSpeak or not
+#define REPORT_ON true
+
+#ifdef REPORT_ON
 // Period in milliseconds for channel update. Should be around 20 seconds
 #define PERIOD 20 * 1000
-#define REPORT_ON true
+#else
+// Period in milliseconds for troubleshooting
+#define PERIOD 1000
+#endif
 
 // ThingSpeak channel and API key
 unsigned long myChannelNumber = SECRET_CH_ID;
@@ -115,9 +122,11 @@ void loop() {
 #endif
 
   // Measure Signal Strength (RSSI) of Wi-Fi connection
-  // long rssi = WiFi.RSSI();
+  long rssi = WiFi.RSSI();
+  Serial.println("RSSI: " + String(rssi));
   // Getting Vcc from board
-  // Serial.println(ESP.getVcc());
+  float Vcc = (float)ESP.getVcc() / 65535 * 100;
+  Serial.println("Vcc: " + String(Vcc) + "%");
 
   // read humidity
   float humi  = dht_sensor.readHumidity();
@@ -132,17 +141,9 @@ void loop() {
   if ( isnan(tempC) || isnan(tempF) || isnan(humi)) {
     Serial.println("Failed to read from DHT sensor!");
   } else {
-    Serial.print("Humidity: ");
-    Serial.print(humi);
-    Serial.print("%");
-
+    Serial.print("Humidity: " + String(humi) + "%");
     Serial.print("  |  ");
-
-    Serial.print("Temperature: ");
-    Serial.print(tempC);
-    Serial.print("°C  ~  ");
-    Serial.print(tempF);
-    Serial.println("°F");
+    Serial.println("Temperature: " + String(tempC) + "°C  ~  " + String(tempF) + "°F");
   }
   
   if ( isnan(lux) ) {
@@ -155,6 +156,7 @@ void loop() {
   ThingSpeak.setField(1, tempC);
   ThingSpeak.setField(2, humi);
   ThingSpeak.setField(3, lux);
+  ThingSpeak.setField(4, Vcc);
   
   int httpCode = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
   if (httpCode == 200) {
