@@ -7,8 +7,8 @@
 ![schematic](img/Schematic_espweather_2024-01-21.png)
 
 ## Look & Feel
-<img src="img/1704799735216.jpg" width=300>
-<img src="img/1704799735232.jpg" width=300>
+<img src="img/1705861432740.jpg" width=300>
+<img src="img/1705861432754.jpg" width=300>
 <img src="img/1704799735185.jpg" width=300>
 <img src="img/1704799735196.jpg" width=300>
 
