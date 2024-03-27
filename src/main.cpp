@@ -48,14 +48,16 @@
 
 #define PHOTORESISTOR_PIN A0
 // Report to ThingSpeak or not
-#define REPORT_ON true
+#define REPORT_ON
+// Use onbard LEDs to display current state or not
+// #define LED_STATE_ON
 
 #ifdef REPORT_ON
-// Period in milliseconds for channel update. Should be around 20 seconds
-#define PERIOD 20 * 1000
+// Period in microseconds for channel update. Should be around 10 minutes
+#define PERIOD 10 * 60 * 1000 * 1000
 #else
 // Period in milliseconds for troubleshooting
-#define PERIOD 1000
+#define PERIOD 1000 * 1000
 #endif
 
 // ThingSpeak channel and API key
@@ -84,7 +86,8 @@ void writeFieldToThingSpeakChannel(unsigned int fieldId, float value) {
 }
 
 void setup() {
-  pinMode(ONBOARD_LED, OUTPUT);
+  // Can't use with deep sleep
+  // pinMode(ONBOARD_LED, OUTPUT);
   pinMode(ESP8266_LED, OUTPUT);
 
   Serial.begin(SERIAL_BAUDRATE);
@@ -100,26 +103,32 @@ void setup() {
 
 void loop() {
 
-#ifdef REPORT_ON
-  // Connect or reconnect to WiFi
-  if (WiFi.status() != WL_CONNECTED) {
-    Serial.print("Attempting to connect to SSID: ");
-    Serial.println(SECRET_SSID);
-    // Turn off all LEDs
-    digitalWrite(ONBOARD_LED, HIGH);
-    digitalWrite(ESP8266_LED, HIGH);
-    
-    while (WiFi.status() != WL_CONNECTED) {
-      WiFi.begin(ssid, pass); // Connect to WPA/WPA2 network. Change this line if using open or WEP network
-      Serial.print(".");
-      // Switch one LED
-      ledState = !ledState;
-      digitalWrite(ONBOARD_LED, ledState);
-      delay(5000);
+  #ifdef REPORT_ON
+    // Connect or reconnect to WiFi
+    if (WiFi.status() != WL_CONNECTED) {
+      Serial.print("Attempting to connect to SSID: ");
+      Serial.println(SECRET_SSID);
+      // Turn on all LEDs
+      // Can't use with deep sleep
+      // digitalWrite(ONBOARD_LED, HIGH);
+      digitalWrite(ESP8266_LED, HIGH);
+      
+      while (WiFi.status() != WL_CONNECTED) {
+        WiFi.begin(ssid, pass); // Connect to WPA/WPA2 network. Change this line if using open or WEP network
+        Serial.print(".");
+        // Switch one LED
+        ledState = !ledState;
+        digitalWrite(ESP8266_LED, ledState);
+        delay(5000);
+      }
+      Serial.println("\nConnected.");
     }
-    Serial.println("\nConnected.");
-  }
-#endif
+  #endif
+
+  // Turn off all LEDs
+  // Can't use with deep sleep
+  // digitalWrite(ONBOARD_LED, LOW);
+  digitalWrite(ESP8266_LED, LOW);
 
   // Measure Signal Strength (RSSI) of Wi-Fi connection
   long rssi = WiFi.RSSI();
@@ -145,33 +154,35 @@ void loop() {
     Serial.print("  |  ");
     Serial.println("Temperature: " + String(tempC) + "°C  ~  " + String(tempF) + "°F");
   }
-  
+
   if ( isnan(lux) ) {
     Serial.println("Failed to read from photoresistor!");
   } else {
     Serial.println(String(lux) + " lux");
   }
 
-#ifdef REPORT_ON
-  ThingSpeak.setField(1, tempC);
-  ThingSpeak.setField(2, humi);
-  ThingSpeak.setField(3, lux);
-  ThingSpeak.setField(4, Vcc);
-  
-  int httpCode = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
-  if (httpCode == 200) {
-    Serial.println("Channel write successful.");
-  } else {
-    Serial.println("Problem writing to channel - HTTP error code " + String(httpCode));
-  }
- #endif
+  #ifdef REPORT_ON
+    ThingSpeak.setField(1, tempC);
+    ThingSpeak.setField(2, humi);
+    ThingSpeak.setField(3, lux);
+    ThingSpeak.setField(4, Vcc);
+    
+    int httpCode = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
+    if (httpCode == 200) {
+      Serial.println("Channel write successful.");
+    } else {
+      Serial.println("Problem writing to channel - HTTP error code " + String(httpCode));
+    }
+  #endif
 
-  // Switch two LEDs
-  ledState = !ledState;
-  digitalWrite(ONBOARD_LED, ledState);
-  digitalWrite(ESP8266_LED, !ledState);
+  #ifdef LED_STATE_ON
+    // Switch two onboard LEDs
+    ledState = !ledState;
+    digitalWrite(ONBOARD_LED, ledState);
+    digitalWrite(ESP8266_LED, !ledState);
+  #endif
 
   // Wait to update the channel again
-  delay(PERIOD);
+  ESP.deepSleep(PERIOD);
 }
 

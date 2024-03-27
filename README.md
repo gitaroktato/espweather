@@ -12,6 +12,19 @@
 <img src="img/1704799735185.jpg" width=300>
 <img src="img/1704799735196.jpg" width=300>
 
+## Energy Consumption and Battery Life
+Powered by a [18650 battery with the capacity of 3300mAh](https://www.hestore.hu/prod_10039174.html?lang=en).
+
+| State | Consumption | Period |
+| -- | -- | -- |
+| Wake - with onboard LEDs ON | 100mA | ~1s |
+| Sleep - with onboard LEDs ON | 30mA | ~1s |
+| Wake - with onboard LEDs OFF | 80mA | ~8s |
+| Deep Sleep - with onboard LEDs OFF | 10mA | ~10 min |
+
+Reporting time without deep sleep and both LEDs blinking ~ 22hrs
+Reporting time with deep sleep ~ 
+
 ## References
 
 - https://randomnerdtutorials.com/esp8266-pinout-reference-gpios/
@@ -34,6 +47,9 @@
 - https://www.youtube.com/watch?v=f2yMs-JAyQM
 - https://www.youtube.com/watch?v=ttyKZnVzic4
 - https://youtu.be/6DY767kQnUM?si=SXygTiLH4zx0RgAH
+
+### Deep Sleep
+- https://randomnerdtutorials.com/esp8266-deep-sleep-with-arduino-ide/
 
 ### Photocells
 - https://www.mouser.com/datasheet/2/737/photocells-932884.pdf
