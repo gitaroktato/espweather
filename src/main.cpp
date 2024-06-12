@@ -132,7 +132,7 @@ void loop() {
 
   // Measure Signal Strength (RSSI) of Wi-Fi connection
   long rssi = WiFi.RSSI();
-  Serial.println("RSSI: " + String(rssi));
+  Serial.println("RSSI: " + String(rssi) + " dB");
   // Getting Vcc from board
   float Vcc = (float)ESP.getVcc() / 65535 * 100;
   Serial.println("Vcc: " + String(Vcc) + "%");
@@ -183,6 +183,7 @@ void loop() {
   #endif
 
   // Wait to update the channel again
+  Serial.println("Now on deep sleep for " + String(PERIOD / (1000 * 1000)) + " sec");
   ESP.deepSleep(PERIOD);
 }
 
