@@ -22,8 +22,20 @@ Powered by a [18650 battery with the capacity of 3300mAh](https://www.hestore.hu
 | Wake - with onboard LEDs OFF | 80mA | ~8s |
 | Deep Sleep - with onboard LEDs OFF | 10mA | ~10 min |
 
-Reporting time without deep sleep and both LEDs blinking ~ 22hrs
-Reporting time with deep sleep ~ 
+Reporting time without deep sleep and both LEDs blinking ~22 hrs
+Reporting time with deep sleep ~3 days
+
+On average expected reporting time is 13 days (3300mAh / ~10mA / 24h).
+
+## Measurements
+Measurements made using an oscilloscope through a shunt resistor of 1 Ohm. See the setup below:
+<img src="img/deep_sleep/measuring_power_usage.jpg" width=300>
+
+Wake - with onboard LEDs ON shows 60mA usage on average.
+<img src="img/deep_sleep/wake_led_on.jpg" width=300>
+
+Deep sleep with periodic wake times - shows 10mA usage on average with 80mA peak.
+<img src="img/deep_sleep/deep_sleep_and_wake.jpg" width=300>
 
 ## References
 

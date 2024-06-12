@@ -132,7 +132,7 @@ void loop() {
 
   // Measure Signal Strength (RSSI) of Wi-Fi connection
   long rssi = WiFi.RSSI();
-  Serial.println("RSSI: " + String(rssi));
+  Serial.println("RSSI: " + String(rssi) + " dB");
   // Getting Vcc from board
   float Vcc = (float)ESP.getVcc() / 65535 * 100;
   Serial.println("Vcc: " + String(Vcc) + "%");
@@ -166,6 +166,7 @@ void loop() {
     ThingSpeak.setField(2, humi);
     ThingSpeak.setField(3, lux);
     ThingSpeak.setField(4, Vcc);
+    ThingSpeak.setField(5, rssi);
     
     int httpCode = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
     if (httpCode == 200) {
@@ -183,6 +184,7 @@ void loop() {
   #endif
 
   // Wait to update the channel again
+  Serial.println("Now on deep sleep for " + String(PERIOD / (1000 * 1000)) + " sec");
   ESP.deepSleep(PERIOD);
 }
 
