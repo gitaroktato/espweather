@@ -166,6 +166,7 @@ void loop() {
     ThingSpeak.setField(2, humi);
     ThingSpeak.setField(3, lux);
     ThingSpeak.setField(4, Vcc);
+    ThingSpeak.setField(5, rssi);
     
     int httpCode = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
     if (httpCode == 200) {
