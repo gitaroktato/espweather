@@ -64,6 +64,9 @@ Deep sleep with periodic wake times - shows 10mA usage on average with 80mA peak
 - https://www.youtube.com/watch?v=ttyKZnVzic4
 - https://youtu.be/6DY767kQnUM?si=SXygTiLH4zx0RgAH
 
+### Power Consumption Comparison
+- https://blog.voneicken.com/2018/lp-wifi-esp-comparison/
+
 ### Deep Sleep
 - https://randomnerdtutorials.com/esp8266-deep-sleep-with-arduino-ide/
 
