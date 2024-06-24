@@ -69,6 +69,7 @@ Deep sleep with periodic wake times - shows 10mA usage on average with 80mA peak
 
 ### Deep Sleep
 - https://randomnerdtutorials.com/esp8266-deep-sleep-with-arduino-ide/
+- https://www.instructables.com/ESP8266-Pro-Tips
 
 ### Photocells
 - https://www.mouser.com/datasheet/2/737/photocells-932884.pdf
