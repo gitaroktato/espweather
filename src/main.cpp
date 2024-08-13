@@ -54,7 +54,7 @@
 
 #ifdef REPORT_ON
 // Period in microseconds for channel update. Should be around 10 minutes
-#define PERIOD 10 * 60 * 1000 * 1000
+#define PERIOD 15 * 60 * 1000 * 1000
 #else
 // Period in milliseconds for troubleshooting
 #define PERIOD 1000 * 1000
@@ -131,8 +131,10 @@ void loop() {
   digitalWrite(ESP8266_LED, LOW);
 
   // Measure Signal Strength (RSSI) of Wi-Fi connection
-  long rssi = WiFi.RSSI();
-  Serial.println("RSSI: " + String(rssi) + " dB");
+  #ifdef REPORT_ON
+    long rssi = WiFi.RSSI();
+    Serial.println("RSSI: " + String(rssi) + " dB");
+  #endif
   // Getting Vcc from board
   float Vcc = (float)ESP.getVcc() / 65535 * 100;
   Serial.println("Vcc: " + String(Vcc) + "%");
@@ -187,4 +189,3 @@ void loop() {
   Serial.println("Now on deep sleep for " + String(PERIOD / (1000 * 1000)) + " sec");
   ESP.deepSleep(PERIOD);
 }
-

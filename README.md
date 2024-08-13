@@ -8,9 +8,9 @@
 
 ## Look & Feel
 <img src="img/1705861432740.jpg" width=300>
-<img src="img/1705861432754.jpg" width=300>
+<img src="img/1723120591143.jpg" width=300>
 <img src="img/1704799735185.jpg" width=300>
-<img src="img/1704799735196.jpg" width=300>
+<img src="img/1723542902367.jpg" width=300>
 
 ## Energy Consumption and Battery Life
 Powered by a [18650 battery with the capacity of 3300mAh](https://www.hestore.hu/prod_10039174.html?lang=en).
