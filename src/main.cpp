@@ -48,16 +48,16 @@
 
 #define PHOTORESISTOR_PIN A0
 // Report to ThingSpeak or not
-#define REPORT_ON
+// #define REPORT_ON
 // Use onbard LEDs to display current state or not
 // #define LED_STATE_ON
 
 #ifdef REPORT_ON
 // Period in microseconds for channel update. Should be around 10 minutes
-#define PERIOD 15 * 60 * 1000 * 1000
+#define PERIOD 15 * 1000 * 1000
 #else
-// Period in milliseconds for troubleshooting
-#define PERIOD 1000 * 1000
+// Period in microseconds for troubleshooting. Should be around 15 seconds.
+#define PERIOD 15 * 1000 * 1000
 #endif
 
 // ThingSpeak channel and API key
@@ -96,8 +96,9 @@ void setup() {
 #ifdef REPORT_ON
   WiFi.mode(WIFI_STA);
   ThingSpeak.begin(client);
+#else
+  WiFi.mode(WIFI_OFF);
 #endif
-
   dht_sensor.begin(); // initialize the DHT sensor
 }
 
@@ -187,5 +188,8 @@ void loop() {
 
   // Wait to update the channel again
   Serial.println("Now on deep sleep for " + String(PERIOD / (1000 * 1000)) + " sec");
+  // Normal sleep in milliseconds
+  // delay(5 * 1000);
+  // Deep sleep in microseconds
   ESP.deepSleep(PERIOD);
 }

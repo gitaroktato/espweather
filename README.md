@@ -74,3 +74,6 @@ Deep sleep with periodic wake times - shows 10mA usage on average with 80mA peak
 
 ### Photocells
 - https://www.mouser.com/datasheet/2/737/photocells-932884.pdf
+
+### FTDI Upload
+https://community.platformio.org/t/esp32-pio-unified-debugger/4541/19
