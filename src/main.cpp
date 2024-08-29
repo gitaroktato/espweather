@@ -48,15 +48,15 @@
 
 #define PHOTORESISTOR_PIN A0
 // Report to ThingSpeak or not
-// #define REPORT_ON
+#define REPORT_ON
 // Use onbard LEDs to display current state or not
 // #define LED_STATE_ON
 
 #ifdef REPORT_ON
-// Period in microseconds for channel update. Should be around 10 minutes
-#define PERIOD 15 * 1000 * 1000
+// Period in microseconds for channel update. Should be around 10-15 minutes
+#define PERIOD 15 * 60 * 1000 * 1000
 #else
-// Period in microseconds for troubleshooting. Should be around 15 seconds.
+// Period in microseconds for troubleshooting. Should be around 15 seconds
 #define PERIOD 15 * 1000 * 1000
 #endif
 
