@@ -36,6 +36,7 @@ On average expected reporting time should be **56 days (3300mAh / ~2.44mA / 24h)
 - Last reporting time with deep sleep ~3 days (on balcony, but suspecting continuous connection problems. See issue #12)
 
 ### Hardware Modifications
+#### Cutting of the onboard USB UART bridge
 In order to reduce power consumption Node MCU requires hardware modifications. This is mainly due to the fact, that the CP2102 UART bridge is getting powered even if we use the 3V3 pin. The estimated power consumption is around `~15mA`. This can be done with an exacto knife.
 
 <img src="img/uart_bridge_cutoff/schematics.png" width=300>
@@ -51,6 +52,25 @@ Next we break the connection.
 
 - More about this topic is available [over here](https://tinker.yeoman.digital/2016/05/29/running-nodemcu-on-a-battery-esp8266-low-power-consumption-revisited/).
 - See the schematics [over here](https://github.com/nodemcu/nodemcu-devkit-v1.0/blob/master/NODEMCU_DEVKIT_V1.0.PDF).
+
+
+#### External SMA antenna
+Another improvement we can do is to include an external antenna. You can solder it directly, or use an U.FL connector for nicer look & feel.
+
+If you want to solder in an U.FL socket, you need to arrange it the following way. Start with cutting off the connection for the onbard antenna.
+
+<img src="img/sma_antenna/1723120591204.jpg" width=300>
+
+Arrange the U.FL socket the following way:
+
+<img src="img/sma_antenna/1723120591195.jpg" width=300>
+
+For the direct wire connection you can secure your work usgin hot glue. See the images below:
+
+<img src="img/sma_antenna/1723120591164.jpg" width=300>
+<img src="img/sma_antenna/1723120591156.jpg" width=300>
+
+More about this topic is available on [YouTube](https://www.youtube.com/watch?v=RYlvXglUnGc) and on other sites, [here](https://community.home-assistant.io/t/how-to-add-an-external-antenna-to-an-esp-board/131601) and [here](https://www.hackster.io/simon-vavpotic/esp32-and-esp8266-external-antenna-f28e6b).
 
 ### Measurements
 Measurements made using an oscilloscope through a shunt resistor of 1 Ohm. See the setup below:
