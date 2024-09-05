@@ -34,6 +34,7 @@
 
 
 #include <DHT.h>
+#include <Adafruit_BMP280.h>
 #include <ESP8266WiFi.h>
 
 #include "ThingSpeak.h"
@@ -45,6 +46,7 @@
 
 #define DHT_SENSOR_PIN  D7 // ESP8266 pin D7 connected to DHT11 sensor
 #define DHT_SENSOR_TYPE DHT11
+#define SEALEVELPRESSURE_HPA (1013.25)
 
 #define PHOTORESISTOR_PIN A0
 // Report to ThingSpeak or not
@@ -70,6 +72,7 @@ int keyIndex = 0;            // your network key index number (needed only for W
 WiFiClient  client;
 
 DHT dht_sensor(DHT_SENSOR_PIN, DHT_SENSOR_TYPE);
+Adafruit_BMP280 bmp; // I2C
 
 bool ledState = 0x0;
 
@@ -100,6 +103,7 @@ void setup() {
   WiFi.mode(WIFI_OFF);
 #endif
   dht_sensor.begin(); // initialize the DHT sensor
+	bmp.begin(0x76);		//Begin the sensor
 }
 
 void loop() {
@@ -140,22 +144,33 @@ void loop() {
   float Vcc = (float)ESP.getVcc() / 65535 * 100;
   Serial.println("Vcc: " + String(Vcc) + "%");
 
-  // read humidity
+  // DHT11 read humidity
   float humi  = dht_sensor.readHumidity();
-  // read temperature in Celsius
+  // DHT11 read temperature in Celsius
   float tempC = dht_sensor.readTemperature();
-  // read temperature in Fahrenheit
-  float tempF = dht_sensor.readTemperature(true);
+  // BMP280 reads
+  float airPressure = bmp.readPressure() / 100.0F;
+  float altitude = bmp.readAltitude(SEALEVELPRESSURE_HPA);
+
   // read photoresistor value
   float lux = analogRead(PHOTORESISTOR_PIN);
 
   // check whether the reading is successful or not
-  if ( isnan(tempC) || isnan(tempF) || isnan(humi)) {
+  if ( isnan(tempC) ||  isnan(humi)) {
     Serial.println("Failed to read from DHT sensor!");
   } else {
     Serial.print("Humidity: " + String(humi) + "%");
     Serial.print("  |  ");
-    Serial.println("Temperature: " + String(tempC) + "°C  ~  " + String(tempF) + "°F");
+    Serial.println("Temperature: " + String(tempC) + "°C");
+  }
+
+  // check whether the reading is successful or not
+  if ( isnan(airPressure) ||  isnan(altitude)) {
+    Serial.println("Failed to read from BMP280 sensor!");
+  } else {
+    Serial.print("Air pressure: " + String(airPressure) + " hPa"); 
+    Serial.print("  |  ");
+    Serial.println("Altitude: " + String(altitude) + " m");
   }
 
   if ( isnan(lux) ) {
@@ -166,10 +181,12 @@ void loop() {
 
   #ifdef REPORT_ON
     ThingSpeak.setField(1, tempC);
-    ThingSpeak.setField(2, humi);
+    //ThingSpeak.setField(2, humi);
     ThingSpeak.setField(3, lux);
     ThingSpeak.setField(4, Vcc);
     ThingSpeak.setField(5, rssi);
+    ThingSpeak.setField(6, airPressure);
+    ThingSpeak.setField(7, altitude);
     
     int httpCode = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
     if (httpCode == 200) {
