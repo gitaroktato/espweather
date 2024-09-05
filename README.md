@@ -4,7 +4,11 @@
 [![View it on ThikgSpeak](https://github.com/gitaroktato/espweather/assets/1140629/1ec4722a-0eb8-45fa-9a29-158e1f37708d)](https://thingspeak.com/channels/2390966)
 
 ## Schematic
-![schematic](img/Schematic_espweather_2024-01-21.png)
+EasyEDA schematics
+![schematic](img/Schematic_espweather_2024-09-05.png)
+
+Fritzing diagram
+![schematic](img/schematics_bb.png)
 
 ## Look & Feel
 <img src="img/1705861432740.jpg" width=300>
@@ -38,6 +42,8 @@ On average expected reporting time should be **56 days (3300mAh / ~2.44mA / 24h)
 ### Hardware Modifications
 #### Cutting of the onboard USB UART bridge
 In order to reduce power consumption Node MCU requires hardware modifications. This is mainly due to the fact, that the CP2102 UART bridge is getting powered even if we use the 3V3 pin. The estimated power consumption is around `~15mA`. This can be done with an exacto knife.
+
+Programming and flashing firmware for the ESP8266 can be done with an FTDI chip (see [Fritzing diagram](#schematic))
 
 <img src="img/uart_bridge_cutoff/schematics.png" width=300>
 
