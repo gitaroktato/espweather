@@ -12,7 +12,7 @@ Fritzing diagram
 
 ## Look & Feel
 <img src="img/1705861432740.jpg" width=300>
-<img src="img/1723120591143.jpg" width=300>
+<img src="img/1725542344289.jpg" width=300>
 <img src="img/1725522983743.jpg" width=300>
 <img src="img/1725522983755.jpg" width=300>
 
@@ -23,21 +23,22 @@ Powered by a [18650 battery with the capacity of 3300mAh](https://www.hestore.hu
 | -- | -- | -- |
 | Wake - with onboard LEDs ON | 100mA | ~1s |
 | Sleep - with onboard LEDs ON | 30mA | ~1s |
-| Wake - with onboard LEDs OFF | 80mA | ~5s |
-| Deep Sleep - with onboard LEDs OFF | 2mA | ~15 min |
+| Wake - with onboard LEDs OFF | 160mA | ~5s |
+| Deep Sleep - with onboard LEDs OFF | 4mA | ~15 min |
 
 
 ### Battery life estimation
-Over an hour period we expect to have 4 times `5s` spent on reporting. During these intervals the energy consumption is `20mA`.
-In the remaining time we expect to consume `2mA`. This period lasts for `3600s - (4 * 5s)) = 3580s`.
+Over an hour period we expect to have 4 times `5s` spent on reporting. During these intervals the energy consumption is `160mA`.
+In the remaining time we expect to consume `4mA`. This period lasts for `3600s - (4 * 5s)) = 3580s`.
 
-The total battery consumption over an hour is around `80mA * 5s * 4` for the reporting periods, and `2mA * (3600s - (4 * 5s))` for the deep sleep.
-**Consumption over an hour is** `(1600mA + 7160mA) / 3600s ~= 2.44mA`
+The total battery consumption over an hour is around `160mA * 5s * 4` for the reporting periods, and `4mA * 3580s` for the deep sleep.
+**Consumption over an hour is** `(3200mA + 14320mA) / 3600s ~= 4.86mA`
 
-On average expected reporting time should be **56 days (3300mAh / ~2.44mA / 24h)**!
+On average expected reporting time should be **28 days (3300mAh / ~4.86mA / 24h)**!
 
 - Current reporting time without deep sleep and both LEDs blinking ~22 hrs
 - Last reporting time with deep sleep ~3 days (on balcony, but suspecting continuous connection problems. See issue #12)
+- Last reporting time with deep sleep ~14 days (on balcony with a step-up converter)
 
 ### Hardware Modifications
 #### Cutting of the onboard USB UART bridge
@@ -91,9 +92,9 @@ Deep sleep with periodic wake times - shows `17mA` usage on average with 80mA pe
 
 <img src="img/deep_sleep/deep_sleep_and_wake.jpg" width=300>
 
-Deep sleep after hardware modifications - shows `2mA` usage on average with 80mA peak. See the table above with estimated battery life.
+Deep sleep after hardware modifications - shows `4mA` usage on average with 160mA peak. See the table above with estimated battery life.
 
-<img src="img/deep_sleep/deep_sleep_hardware_mod.jpg" width=300>
+<img src="img/deep_sleep/deep_sleep_via_step_up.jpg" width=300>
 
 ## References
 
