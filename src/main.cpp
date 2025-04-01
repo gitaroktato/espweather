@@ -181,7 +181,7 @@ void loop() {
 
   #ifdef REPORT_ON
     ThingSpeak.setField(1, tempC);
-    //ThingSpeak.setField(2, humi);
+    ThingSpeak.setField(2, humi);
     ThingSpeak.setField(3, lux);
     ThingSpeak.setField(4, Vcc);
     ThingSpeak.setField(5, rssi);
