@@ -32,9 +32,7 @@
  Created: Feb 1, 2017 by Hans Scharler (http://nothans.com)
 */
 
-
-#include <DHT.h>
-#include <Adafruit_BMP280.h>
+#include <Adafruit_BME280.h>
 #include <ESP8266WiFi.h>
 
 #include "ThingSpeak.h"
@@ -44,8 +42,6 @@
 #define ONBOARD_LED 16
 #define ESP8266_LED 2
 
-#define DHT_SENSOR_PIN  D7 // ESP8266 pin D7 connected to DHT11 sensor
-#define DHT_SENSOR_TYPE DHT11
 #define SEALEVELPRESSURE_HPA (1013.25)
 
 #define PHOTORESISTOR_PIN A0
@@ -71,8 +67,7 @@ char pass[] = SECRET_PASS;   // your network password
 int keyIndex = 0;            // your network key index number (needed only for WEP)
 WiFiClient  client;
 
-DHT dht_sensor(DHT_SENSOR_PIN, DHT_SENSOR_TYPE);
-Adafruit_BMP280 bmp; // I2C
+Adafruit_BME280 bme; // I2C
 
 bool ledState = 0x0;
 
@@ -102,8 +97,13 @@ void setup() {
 #else
   WiFi.mode(WIFI_OFF);
 #endif
-  dht_sensor.begin(); // initialize the DHT sensor
-	bmp.begin(0x76);		//Begin the sensor
+
+  bool bme_status;
+	bme_status = bme.begin(0x76);		//Begin the sensor
+  if (!bme_status) {
+    Serial.println("Could not find a valid BME280 sensor, check wiring!");
+    while (1);
+  }
 }
 
 void loop() {
@@ -145,19 +145,19 @@ void loop() {
   Serial.println("Vcc: " + String(Vcc) + "%");
 
   // DHT11 read humidity
-  float humi  = dht_sensor.readHumidity();
+  float humi  = bme.readHumidity();
   // DHT11 read temperature in Celsius
-  float tempC = dht_sensor.readTemperature();
+  float tempC = bme.readTemperature();
   // BMP280 reads
-  float airPressure = bmp.readPressure() / 100.0F;
-  float altitude = bmp.readAltitude(SEALEVELPRESSURE_HPA);
+  float airPressure = bme.readPressure() / 100.0F;
+  float altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);
 
   // read photoresistor value
   float lux = analogRead(PHOTORESISTOR_PIN);
 
   // check whether the reading is successful or not
   if ( isnan(tempC) ||  isnan(humi)) {
-    Serial.println("Failed to read from DHT sensor!");
+    Serial.println("Failed to read from BME sensor!");
   } else {
     Serial.print("Humidity: " + String(humi) + "%");
     Serial.print("  |  ");
@@ -166,7 +166,7 @@ void loop() {
 
   // check whether the reading is successful or not
   if ( isnan(airPressure) ||  isnan(altitude)) {
-    Serial.println("Failed to read from BMP280 sensor!");
+    Serial.println("Failed to read from BME280 sensor!");
   } else {
     Serial.print("Air pressure: " + String(airPressure) + " hPa"); 
     Serial.print("  |  ");
