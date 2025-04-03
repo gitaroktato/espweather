@@ -32,8 +32,7 @@
  Created: Feb 1, 2017 by Hans Scharler (http://nothans.com)
 */
 
-
-#include <DHT.h>
+#include <Adafruit_BME280.h>
 #include <ESP8266WiFi.h>
 
 #include "ThingSpeak.h"
@@ -43,8 +42,7 @@
 #define ONBOARD_LED 16
 #define ESP8266_LED 2
 
-#define DHT_SENSOR_PIN  D7 // ESP8266 pin D7 connected to DHT11 sensor
-#define DHT_SENSOR_TYPE DHT11
+#define SEALEVELPRESSURE_HPA (1013.25)
 
 #define PHOTORESISTOR_PIN A0
 // Report to ThingSpeak or not
@@ -69,7 +67,7 @@ char pass[] = SECRET_PASS;   // your network password
 int keyIndex = 0;            // your network key index number (needed only for WEP)
 WiFiClient  client;
 
-DHT dht_sensor(DHT_SENSOR_PIN, DHT_SENSOR_TYPE);
+Adafruit_BME280 bme; // I2C
 
 bool ledState = 0x0;
 
@@ -99,7 +97,13 @@ void setup() {
 #else
   WiFi.mode(WIFI_OFF);
 #endif
-  dht_sensor.begin(); // initialize the DHT sensor
+
+  bool bme_status;
+	bme_status = bme.begin(0x76);		//Begin the sensor
+  if (!bme_status) {
+    Serial.println("Could not find a valid BME280 sensor, check wiring!");
+    while (1);
+  }
 }
 
 void loop() {
@@ -140,22 +144,33 @@ void loop() {
   float Vcc = (float)ESP.getVcc() / 65535 * 100;
   Serial.println("Vcc: " + String(Vcc) + "%");
 
-  // read humidity
-  float humi  = dht_sensor.readHumidity();
-  // read temperature in Celsius
-  float tempC = dht_sensor.readTemperature();
-  // read temperature in Fahrenheit
-  float tempF = dht_sensor.readTemperature(true);
+  // DHT11 read humidity
+  float humi  = bme.readHumidity();
+  // DHT11 read temperature in Celsius
+  float tempC = bme.readTemperature();
+  // BMP280 reads
+  float airPressure = bme.readPressure() / 100.0F;
+  float altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);
+
   // read photoresistor value
   float lux = analogRead(PHOTORESISTOR_PIN);
 
   // check whether the reading is successful or not
-  if ( isnan(tempC) || isnan(tempF) || isnan(humi)) {
-    Serial.println("Failed to read from DHT sensor!");
+  if ( isnan(tempC) ||  isnan(humi)) {
+    Serial.println("Failed to read from BME sensor!");
   } else {
     Serial.print("Humidity: " + String(humi) + "%");
     Serial.print("  |  ");
-    Serial.println("Temperature: " + String(tempC) + "°C  ~  " + String(tempF) + "°F");
+    Serial.println("Temperature: " + String(tempC) + "°C");
+  }
+
+  // check whether the reading is successful or not
+  if ( isnan(airPressure) ||  isnan(altitude)) {
+    Serial.println("Failed to read from BME280 sensor!");
+  } else {
+    Serial.print("Air pressure: " + String(airPressure) + " hPa"); 
+    Serial.print("  |  ");
+    Serial.println("Altitude: " + String(altitude) + " m");
   }
 
   if ( isnan(lux) ) {
@@ -170,6 +185,8 @@ void loop() {
     ThingSpeak.setField(3, lux);
     ThingSpeak.setField(4, Vcc);
     ThingSpeak.setField(5, rssi);
+    ThingSpeak.setField(6, airPressure);
+    ThingSpeak.setField(7, altitude);
     
     int httpCode = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
     if (httpCode == 200) {
