@@ -1,16 +1,16 @@
 #include <Arduino.h>
 
 /*
- ESP8266 DHT11 --> ThingSpeak Channel
+ ESP8266 BME280 --> ThingSpeak Channel
  
- This sketch sends the DHT11 temperature/humidity of an ESP8266 to a ThingSpeak
+ This sketch sends the BME280 temperature/humidity of an ESP8266 to a ThingSpeak
  channel using the ThingSpeak API (https://www.mathworks.com/help/thingspeak).
  
  Requirements:
  
    * ESP8266 Wi-Fi Device
    * Arduino 1.8.8+ IDE
-   * kY-015 sensor board with DHT11
+   * BME280 sensor board
    * Additional Boards URL: http://arduino.esp8266.com/stable/package_esp8266com_index.json
    * Library: esp8266 by ESP8266 Community
    * Library: ThingSpeak by MathWorks
@@ -144,9 +144,9 @@ void loop() {
   float Vcc = (float)ESP.getVcc() / 65535 * 100;
   Serial.println("Vcc: " + String(Vcc) + "%");
 
-  // DHT11 read humidity
+  // BE280 read humidity
   float humi  = bme.readHumidity();
-  // DHT11 read temperature in Celsius
+  // BE280 read temperature in Celsius
   float tempC = bme.readTemperature();
   // BMP280 reads
   float airPressure = bme.readPressure() / 100.0F;
