@@ -5,7 +5,7 @@
 
 ## Schematic
 EasyEDA schematics
-![schematic](img/Schematic_espweather_2024-09-05.png)
+![schematic](img/Schematic_espweather_2025-04-03.png)
 
 Fritzing diagram
 ![schematic](img/schematics_bb.png)
