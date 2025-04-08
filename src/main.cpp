@@ -119,6 +119,7 @@ void loop() {
     // Connect or reconnect to WiFi
     if (WiFi.status() != WL_CONNECTED) {
       Serial.print("Attempting to connect to SSID: ");
+      int attempts = 0;
       Serial.println(SECRET_SSID);
       // Turn on all LEDs
       // Can't use with deep sleep
@@ -132,6 +133,12 @@ void loop() {
         // Switch one LED
         ledState = !ledState;
         digitalWrite(ESP8266_LED, ledState);
+        // Check number of attempts
+        attempts++;
+        if (attempts > 3) {
+          Serial.println("No more connection attempts, reset.");
+          return;
+        }
         delay(5000);
       }
       Serial.println("\nConnected.");
