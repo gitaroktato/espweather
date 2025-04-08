@@ -5,7 +5,7 @@
 
 ## Schematic
 EasyEDA schematics
-![schematic](img/Schematic_espweather_2024-09-05.png)
+![schematic](img/Schematic_espweather_2025-04-03.png)
 
 Fritzing diagram
 ![schematic](img/schematics_bb.png)
@@ -40,15 +40,15 @@ On average expected reporting time should be **28 days (3300mAh / ~4.86mA / 24h)
 - Last reporting time with deep sleep ~3 days (on balcony, but suspecting continuous connection problems. See issue #12)
 - Last reporting time with deep sleep ~14 days (on balcony with a step-up converter)
 
-### Hardware Modifications
-#### Cutting of the onboard USB UART bridge
+### Circuit Bending
+#### Cutting off the onboard USB UART bridge
 In order to reduce power consumption Node MCU requires hardware modifications. This is mainly due to the fact, that the CP2102 UART bridge is getting powered even if we use the 3V3 pin. The estimated power consumption is around `~15mA`. This can be done with an exacto knife.
 
 Programming and flashing firmware for the ESP8266 can be done with an FTDI chip (see [Fritzing diagram](#schematic))
 
 <img src="img/uart_bridge_cutoff/schematics.png" width=300>
 
-First we scrape of the resin from the surface to reveal the ciruit.
+First we scrape off the resin from the surface to reveal the ciruit.
 
 <img src="img/uart_bridge_cutoff/1724917553473.jpg" width=300>
 
@@ -99,7 +99,7 @@ Deep sleep after hardware modifications - shows `4mA` usage on average with 160m
 ## References
 
 - https://randomnerdtutorials.com/esp8266-pinout-reference-gpios/
-- https://newbiely.com/tutorials/esp8266/esp8266-dht11
+- https://randomnerdtutorials.com/esp8266-bme280-arduino-ide/
 - https://arduinomodules.info/ky-015-temperature-humidity-sensor-module/
 - https://nothans.com/thingspeak-tutorials/esp8266/building-the-internet-of-things-with-the-esp8266-wi-fi-module-and-thingspeak
 - https://github.com/nothans/thingspeak-esp-examples/blob/master/examples/RSSI_to_ThingSpeak.ino
@@ -130,5 +130,9 @@ Deep sleep after hardware modifications - shows `4mA` usage on average with 160m
 ### Photocells
 - https://www.mouser.com/datasheet/2/737/photocells-932884.pdf
 
-### FTDI Upload
-https://community.platformio.org/t/esp32-pio-unified-debugger/4541/19
+### FTDI Upload for ESP8266
+- https://community.platformio.org/t/esp32-pio-unified-debugger/4541/19
+
+### BME280
+- https://randomnerdtutorials.com/esp8266-bme280-arduino-ide
+
