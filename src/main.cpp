@@ -52,7 +52,13 @@
 
 #ifdef REPORT_ON
 // Period in microseconds for channel update. Should be around 10-15 minutes
-#define PERIOD 15 * 60 * 1000 * 1000
+// #define PERIOD 15 * 60 * 1000 * 1000
+#define PERIOD 15 * 1000 * 1000
+//We will use static ip
+IPAddress ip(192, 168, 2, 35);
+IPAddress dns(192, 168, 1, 1);
+IPAddress gateway(192, 168, 2, 1);
+IPAddress subnet(255, 255, 255, 0);
 #else
 // Period in microseconds for troubleshooting. Should be around 15 seconds
 #define PERIOD 15 * 1000 * 1000
@@ -93,6 +99,7 @@ void setup() {
 
 #ifdef REPORT_ON
   WiFi.mode(WIFI_STA);
+  WiFi.persistent(false);
   ThingSpeak.begin(client);
 #else
   WiFi.mode(WIFI_OFF);
@@ -119,6 +126,7 @@ void loop() {
       digitalWrite(ESP8266_LED, HIGH);
       
       while (WiFi.status() != WL_CONNECTED) {
+        WiFi.config(ip, dns, gateway, subnet);
         WiFi.begin(ssid, pass); // Connect to WPA/WPA2 network. Change this line if using open or WEP network
         Serial.print(".");
         // Switch one LED
@@ -157,7 +165,7 @@ void loop() {
 
   // check whether the reading is successful or not
   if ( isnan(tempC) ||  isnan(humi)) {
-    Serial.println("Failed to read from BME sensor!");
+    Serial.println("Failed to read from BME280 sensor!");
   } else {
     Serial.print("Humidity: " + String(humi) + "%");
     Serial.print("  |  ");
